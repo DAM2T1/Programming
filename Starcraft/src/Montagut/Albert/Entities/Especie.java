@@ -68,4 +68,15 @@ public abstract class Especie {
     public double calcDef(){
      return getDefensa();
     }
+
+    @Override
+    public String toString() {
+        return "Especie{" +
+                "nombre='" + nombre + '\'' +
+                ", numVict=" + numVict +
+                ", nivel=" + nivel +
+                ", ataque=" + ataque +
+                ", defensa=" + defensa +
+                '}';
+    }
 }

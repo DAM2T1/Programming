@@ -39,4 +39,12 @@ public class Terran extends Especie {
     public double calcDef() {
         return super.calcDef() + (getDefensa() * 0.25 * getEdificio());
     }
+
+    @Override
+    public String toString() {
+        return "Terran{" +
+                "edificio=" + edificio +
+                ", arma=" + arma +
+                "} " + super.toString();
+    }
 }

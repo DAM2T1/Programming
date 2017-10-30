@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="IORaikishSenpai">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../_IORaikishSenpai/out/artifacts/IORaikishSenpai_jar/IORaikishSenpai.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Libs/IORaikishSenpai.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
