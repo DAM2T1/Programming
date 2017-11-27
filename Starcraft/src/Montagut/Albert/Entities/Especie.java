@@ -7,15 +7,18 @@ package Montagut.Albert.Entities;
 public abstract class Especie {
     private String nombre;
     private int numVict;
-    private int nivel;
     private int ataque;
     private int defensa;
+
+    public Especie(String nombre)
+    {
+        this.nombre = nombre;
+    }
 
     public Especie(String nombre, int ataque, int defensa) {
         this.nombre = nombre;
         this.ataque = ataque;
         this.defensa = defensa;
-        this.nivel = 0;
         this.numVict = 0;
     }
 
@@ -31,16 +34,8 @@ public abstract class Especie {
         return numVict;
     }
 
-    public void setNumVict(int numVict) {
-        this.numVict = numVict;
-    }
-
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public void pluseOneVictory() {
+        this.numVict++;
     }
 
     /**
@@ -62,19 +57,15 @@ public abstract class Especie {
         this.defensa = defensa;
     }
 
-    public double calcAtk(){
-        return getAtaque();
-    }
-    public double calcDef(){
-     return getDefensa();
-    }
+    public abstract double calcAtk();
+    public abstract double calcDef();
+
 
     @Override
     public String toString() {
         return "Especie{" +
                 "nombre='" + nombre + '\'' +
                 ", numVict=" + numVict +
-                ", nivel=" + nivel +
                 ", ataque=" + ataque +
                 ", defensa=" + defensa +
                 '}';

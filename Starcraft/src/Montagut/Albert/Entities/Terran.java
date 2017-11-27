@@ -32,12 +32,12 @@ public class Terran extends Especie {
 
     @Override
     public double calcAtk() {
-        return super.calcAtk() + getAtaque() * 0.5 * getArma();
+        return getAtaque() + getAtaque() * 0.5 * getArma();
     }
 
     @Override
     public double calcDef() {
-        return super.calcDef() + (getDefensa() * 0.25 * getEdificio());
+        return getDefensa() + (getDefensa() * 0.25 * getEdificio());
     }
 
     @Override

@@ -13,15 +13,39 @@ public class Zerg extends Especie{
         this.numEsbirro = numEsbirro;
         this.overlord = overlord;
     }
+    public int getNumEsbirro() {
+        return numEsbirro;
+    }
+
+    public void setNumEsbirro(int numEsbirro) {
+        this.numEsbirro = numEsbirro;
+    }
+
+    public int getOverlord() {
+        return overlord;
+    }
+
+    public void setOverlord(int overlord) {
+        this.overlord = overlord;
+    }
 
     @Override
     public double calcAtk() {
         int ataqueBase = getAtaque(); // esto es para ahorrarme acceder 3 veces al metodo
-        return super.calcAtk() + (ataqueBase * numEsbirro * 0.15) + (ataqueBase * overlord * 0.40) ;
+        return getAtaque() + (ataqueBase * numEsbirro * 0.15) + (ataqueBase * overlord * 0.40) ;
     }
 
     @Override
+
     public double calcDef() {
-        return super.calcDef() + (getAtaque() + numEsbirro + 0.30);
+        return getDefensa()  + (getAtaque() + numEsbirro + 0.30);
+    }
+
+    @Override
+    public String toString() {
+        return "Zerg{" +
+                "numEsbirro=" + numEsbirro +
+                ", overlord=" + overlord +
+                '}' + super.toString();
     }
 }

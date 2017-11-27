@@ -12,21 +12,26 @@ public class Protoss extends  Especie{
         this.pilones = pilones;
     }
 
-    public int getPilones() {
-        return pilones;
-    }
 
     public void setPilones(int pilones) {
         this.pilones = pilones;
     }
 
     @Override
+    public String toString() {
+        return "Protoss{" +
+                "pilones=" + pilones +
+                '}'+ super.toString();
+    }
+
+    @Override
     public double calcAtk() {
-        return super.calcAtk() + pilones * getAtaque() * 0.5;
+        return getAtaque() + pilones * getAtaque() * 0.5;
     }
 
     @Override
     public double calcDef() {
-        return super.calcDef() + pilones * getDefensa() * 0.5;
+        return getDefensa() + pilones * getDefensa() * 0.5;
     }
 }
+
