@@ -15,6 +15,15 @@ public class Agua extends Pokemon {
         this.tipoAgua = tipoAgua;
     }
 
+    public TipoAgua getTipoAgua()
+    {
+        return tipoAgua;
+    }
+
+    public void setTipoAgua(TipoAgua tipoAgua)
+    {
+        this.tipoAgua = tipoAgua;
+    }
     
     
     @Override

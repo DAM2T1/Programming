@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
+
 /**
  * @author Albert Montagut Casero <AlbertMontagutCasero.com>
  */
@@ -14,10 +16,6 @@ public class MainMenu extends javax.swing.JFrame
     {
 
         initComponents();
-        setSize(900, 900);
-        setTitle("Menu");
-        this.setMinimumSize(new Dimension(900, 900));
-        this.setMaximumSize(new Dimension(1100, 1100));
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +31,10 @@ public class MainMenu extends javax.swing.JFrame
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
+        setMaximumSize(new java.awt.Dimension(1100, 1100));
+        setMinimumSize(new java.awt.Dimension(900, 900));
+        setSize(new java.awt.Dimension(900, 900));
 
         buttonAltaPokemon.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         buttonAltaPokemon.setText("Alta Pokemon");
@@ -139,29 +141,35 @@ public class MainMenu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_buttonAltaPokemonActionPerformed
         //initialise Alta view & set visible 
         AltaPokemon aux = new AltaPokemon(this, true);
+        aux.setLocationRelativeTo(null);
         aux.setVisible(true);
     }//GEN-LAST:event_buttonAltaPokemonActionPerformed
 
     private void buttonModificarPropiedadesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonModificarPropiedadesActionPerformed
     {//GEN-HEADEREND:event_buttonModificarPropiedadesActionPerformed
-        //initialise Alta view & set visible 
         ModificarPropiedades aux = new ModificarPropiedades(this, true);
+        aux.setLocationRelativeTo(null);
         aux.setVisible(true);
     }//GEN-LAST:event_buttonModificarPropiedadesActionPerformed
 
     private void buttonVerListaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonVerListaActionPerformed
     {//GEN-HEADEREND:event_buttonVerListaActionPerformed
+
         ListaPokemon aux = new ListaPokemon(this, true);
+        aux.setLocationRelativeTo(null);
         aux.setVisible(true);    }//GEN-LAST:event_buttonVerListaActionPerformed
+
 
     private void buttonCapturarPokemonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonCapturarPokemonActionPerformed
     {//GEN-HEADEREND:event_buttonCapturarPokemonActionPerformed
         CapturarPokemon aux = new CapturarPokemon(this, true);
+        aux.setLocationRelativeTo(null);
         aux.setVisible(true);    }//GEN-LAST:event_buttonCapturarPokemonActionPerformed
 
     private void buttonVerPokemonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonVerPokemonActionPerformed
     {//GEN-HEADEREND:event_buttonVerPokemonActionPerformed
         TotalPokemon aux = new TotalPokemon(this, true);
+        aux.setLocationRelativeTo(null);
         aux.setVisible(true);    }//GEN-LAST:event_buttonVerPokemonActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_exitActionPerformed

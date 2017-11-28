@@ -1,12 +1,23 @@
 package View;
 
+import Controller.TipoAgua;
+import Exception.PokemonException;
+import Model.Agua;
+import Model.Fuego;
+import Model.Planta;
 import Model.Pokemon;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * @author Albert Montagut Casero <AlbertMontagutCasero.com>
  */
 public class ListaPokemon extends javax.swing.JDialog
 {
+
+    private int contadorPokemon = 0;
 
     /**
      * Creates new form ListaPokemon
@@ -15,6 +26,12 @@ public class ListaPokemon extends javax.swing.JDialog
     {
         super(parent, modal);
         initComponents();
+        CBTipoPokemon.addItem("-- Selecciona un pokemon --");
+        CBTipoPokemon.addItem("Todos los pokemon");
+        CBTipoPokemon.addItem("Fuego");
+        CBTipoPokemon.addItem("Planta");
+        CBTipoPokemon.addItem("Agua");
+        hideItems();
 
     }
 
@@ -43,8 +60,11 @@ public class ListaPokemon extends javax.swing.JDialog
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista Pokemon");
+        setLocationByPlatform(true);
+        setMaximumSize(new java.awt.Dimension(900, 600));
+        setMinimumSize(new java.awt.Dimension(700, 400));
+        setSize(new java.awt.Dimension(700, 400));
 
-        CBTipoPokemon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los pokemon", "Fuego", "Planta", "Agua" }));
         CBTipoPokemon.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -80,10 +100,31 @@ public class ListaPokemon extends javax.swing.JDialog
         LTipoAgua.setText("Salada");
 
         BSiguiente.setText("Siguiente");
+        BSiguiente.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                BSiguienteActionPerformed(evt);
+            }
+        });
 
         BAnterior.setText("Anterior");
+        BAnterior.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                BAnteriorActionPerformed(evt);
+            }
+        });
 
         Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                ExitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,24 +217,221 @@ public class ListaPokemon extends javax.swing.JDialog
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //TODO solve error message at start
+
+    private boolean isSelectOptionDefaultSelected()
+    {
+        if (CBTipoPokemon.getSelectedIndex() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void setGenericLabels(Pokemon pokemon)
+    {
+        LTipoPokemon.setText(pokemon.getClass().getSimpleName());
+        LAtaque.setText(Integer.toString(pokemon.getAtk()));
+        LDefensa.setText(Integer.toString(pokemon.getDef()));
+        LPokeName.setText(pokemon.getName());
+        LVida.setText(Integer.toString(pokemon.getLife()));
+    }
 
     private void CBTipoPokemonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CBTipoPokemonActionPerformed
     {//GEN-HEADEREND:event_CBTipoPokemonActionPerformed
-        switch (CBTipoPokemon.getSelectedIndex())
+        if (isSelectOptionDefaultSelected())
         {
-            case 0: 
-                Pokemon[] pokemonCollection = Controller.Controller.getObjMap();
-                
-                break;
-            case 1: //fuego
-                
-                break;
-            case 2: //planta
-                break;
-            case 3: //agua
-                break;
+            showError("No puedes seleccionar esta opcion", "Invalid selection");
+            return;
+        }
+        try
+        {
+            contadorPokemon = 0;
+            //TODO Meter esto en un metodo para llamarlo tambien desde BSiguiente y BAnterior
+            showAndSetLabelValues();
+        } catch (PokemonException ex)
+        {
+            showError(ex.getMessage(), "Pokemon Not Found");
         }
     }//GEN-LAST:event_CBTipoPokemonActionPerformed
+
+    private void showAndSetLabelValues() throws PokemonException
+    {
+        switch (CBTipoPokemon.getSelectedIndex())
+        {
+            case 1:
+                Pokemon[] pokemonCollection = Controller.Controller.getObjMap();
+                if (pokemonCollection.length == 0)
+                {
+                    throw new PokemonException("No Existe ningun pokemon");
+                }
+                showGenericItems();
+                checkStatmentButtons(pokemonCollection.length);
+                if (contadorPokemon < pokemonCollection.length)
+                {
+                    if (pokemonCollection[contadorPokemon] instanceof Fuego)
+                    {
+                        setGenericLabels(pokemonCollection[contadorPokemon]);
+                    } else if (pokemonCollection[contadorPokemon] instanceof Agua)
+                    {
+                        showWaterItems();
+                        setGenericLabels(pokemonCollection[contadorPokemon]);
+                        if (((Agua) pokemonCollection[contadorPokemon]).getTipoAgua() == TipoAgua.DULCE)
+                        {
+                            LTipoAgua.setText("Dulce");
+                        } else
+                        {
+                            LTipoAgua.setText("Salada");
+                        }
+                    } else if (pokemonCollection[contadorPokemon] instanceof Planta)
+                    {
+                        showPlantItems();
+                        setGenericLabels(pokemonCollection[contadorPokemon]);
+                        LHabitat.setText(((Planta) pokemonCollection[contadorPokemon]).getHabitat());
+                    }
+                }
+                break;
+            case 2: //fuego
+                ArrayList<Fuego> fuegoCollection = Controller.Controller.getObjMapFire();
+                if (fuegoCollection.isEmpty())
+                {
+                    throw new PokemonException("No hay pokemons del tipo fuego");
+                }
+                showGenericItems();
+                setGenericLabels(fuegoCollection.get(contadorPokemon));
+                checkStatmentButtons(fuegoCollection.size());
+                break;
+            case 3: //planta
+                ArrayList<Planta> plantaCollection = Controller.Controller.getObjMapPlant();
+                if (plantaCollection.isEmpty())
+                {
+                    throw new PokemonException("No hay pokemons del tipo planta");
+                }
+                showGenericItems();
+                showPlantItems();
+                checkStatmentButtons(plantaCollection.size());
+                setGenericLabels(plantaCollection.get(contadorPokemon));
+                LHabitat.setText(((Planta) plantaCollection.get(contadorPokemon)).getHabitat());
+                break;
+            case 4: //agua
+                ArrayList<Agua> waterCollection = Controller.Controller.getObjMapWater();
+                if (waterCollection.isEmpty())
+                {
+                    throw new PokemonException("No hay pokemons del tipo agua");
+                }
+                showGenericItems();
+                showWaterItems();
+                checkStatmentButtons(waterCollection.size());
+                setGenericLabels(waterCollection.get(contadorPokemon));
+                if (((Agua) waterCollection.get(contadorPokemon)).getTipoAgua() == TipoAgua.DULCE)
+                {
+                    LTipoAgua.setText("Dulce");
+                } else
+                {
+                    LTipoAgua.setText("Salada");
+                }
+                break;
+        }
+    }
+
+    private void BAnteriorActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BAnteriorActionPerformed
+    {//GEN-HEADEREND:event_BAnteriorActionPerformed
+        contadorPokemon--;
+        try
+        {
+            showAndSetLabelValues();
+        } catch (PokemonException ex)
+        {
+            showError(ex.getMessage(), "Pokemon Not Found");
+        }
+    }//GEN-LAST:event_BAnteriorActionPerformed
+
+    private void BSiguienteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BSiguienteActionPerformed
+    {//GEN-HEADEREND:event_BSiguienteActionPerformed
+        contadorPokemon++;
+        try
+        {
+            showAndSetLabelValues();
+        } catch (PokemonException ex)
+        {
+            showError(ex.getMessage(), "Pokemon Not Found");
+        }
+    }//GEN-LAST:event_BSiguienteActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ExitActionPerformed
+    {//GEN-HEADEREND:event_ExitActionPerformed
+        dispose();
+    }//GEN-LAST:event_ExitActionPerformed
+    private void showError(String msg, String errorName)
+    {
+        JOptionPane.showMessageDialog(this, msg,
+                errorName, JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void checkStatmentButtons(int Pokelength)
+    {
+        if (contadorPokemon == 0)
+        {
+            BAnterior.setVisible(false);
+            BSiguiente.setVisible(true);
+        } else if (contadorPokemon == Pokelength - 1)
+        {
+            BAnterior.setVisible(true);
+            BSiguiente.setVisible(false);
+        } else
+        {
+            BAnterior.setVisible(true);
+            BSiguiente.setVisible(true);
+        }
+    }
+
+    private void showPlantItems()
+    {
+        LTipoAgua.setVisible(true);
+        LStaticTipoAgua.setVisible(true);
+        LStaticHabitat.setVisible(false);
+        LHabitat.setVisible(false);
+    }
+
+    private void showWaterItems()
+    {
+        LTipoAgua.setVisible(false);
+        LStaticTipoAgua.setVisible(false);
+        LStaticHabitat.setVisible(true);
+        LHabitat.setVisible(true);
+    }
+
+    private void showGenericItems()
+    {
+        LAtaque.setVisible(true);
+        LDefensa.setVisible(true);
+        LPokeName.setVisible(true);
+        LStaticAtaque.setVisible(true);
+        LStaticDef.setVisible(true);
+        LStaticPokeName.setVisible(true);
+        LStaticVida.setVisible(true);
+        LTipoPokemon.setVisible(true);
+        LVida.setVisible(true);
+    }
+
+    private void hideItems()
+    {
+        BSiguiente.setVisible(false);
+        BAnterior.setVisible(false);
+        LAtaque.setVisible(false);
+        LDefensa.setVisible(false);
+        LHabitat.setVisible(false);
+        LPokeName.setVisible(false);
+        LStaticAtaque.setVisible(false);
+        LStaticDef.setVisible(false);
+        LStaticHabitat.setVisible(false);
+        LStaticPokeName.setVisible(false);
+        LStaticTipoAgua.setVisible(false);
+        LStaticVida.setVisible(false);
+        LTipoAgua.setVisible(false);
+        LTipoPokemon.setVisible(false);
+        LVida.setVisible(false);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BAnterior;

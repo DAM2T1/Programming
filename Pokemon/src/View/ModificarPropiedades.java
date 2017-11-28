@@ -1,9 +1,7 @@
 package View;
 
 import Model.Pokemon;
-import java.awt.Dimension;
 import javax.swing.JOptionPane;
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
  *
@@ -20,11 +18,6 @@ public class ModificarPropiedades extends javax.swing.JDialog
         super(parent, modal);
         initComponents();
         hideItems();
-
-        //TODO make this in Netbeans window propietes
-        //** SCREEN PROPETIES **//
-        this.setMinimumSize(new Dimension(700, 400));
-        this.setMaximumSize(new Dimension(600, 600));
         CBName.addItem("-- Selecciona un pokemon --");
         fillCBName();
 
@@ -44,9 +37,14 @@ public class ModificarPropiedades extends javax.swing.JDialog
         LVida = new javax.swing.JLabel();
         BModificar = new javax.swing.JButton();
         BExit = new javax.swing.JButton();
+        LStaticAtaque = new javax.swing.JLabel();
+        LStaticDefensa = new javax.swing.JLabel();
+        LStativVida = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar Propiedades");
+        setMaximumSize(new java.awt.Dimension(900, 600));
+        setMinimumSize(new java.awt.Dimension(700, 400));
         setSize(new java.awt.Dimension(700, 400));
 
         CBName.addActionListener(new java.awt.event.ActionListener()
@@ -62,6 +60,13 @@ public class ModificarPropiedades extends javax.swing.JDialog
         SDefensa.setModel(new javax.swing.SpinnerNumberModel(25, 1, 55, 1));
 
         SVida.setModel(new javax.swing.SpinnerNumberModel(55, 20, 100, 1));
+
+        LAtaque.setText("asd");
+        LAtaque.setToolTipText("");
+
+        LDefensa.setText("asd");
+
+        LVida.setText("asd");
 
         BModificar.setText("Modificar!");
         BModificar.addActionListener(new java.awt.event.ActionListener()
@@ -81,30 +86,46 @@ public class ModificarPropiedades extends javax.swing.JDialog
             }
         });
 
+        LStaticAtaque.setText("Ataque");
+
+        LStaticDefensa.setText("Defensa");
+
+        LStativVida.setText("Vida");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BExit)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(LAtaque)
-                                .addComponent(LDefensa)
-                                .addComponent(LVida))
-                            .addGap(85, 85, 85)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(SAtaque)
-                                .addComponent(SDefensa)
-                                .addComponent(SVida)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(CBName, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(241, 241, 241)
-                            .addComponent(BModificar))))
-                .addContainerGap(367, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(BExit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LStaticAtaque)
+                            .addComponent(LStaticDefensa)
+                            .addComponent(LStativVida))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(76, 76, 76)
+                                        .addComponent(LVida))
+                                    .addComponent(LDefensa, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(LAtaque, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(109, 109, 109)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(SAtaque)
+                                    .addComponent(SDefensa)
+                                    .addComponent(SVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CBName, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(241, 241, 241)
+                                .addComponent(BModificar)))))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,19 +134,22 @@ public class ModificarPropiedades extends javax.swing.JDialog
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BModificar))
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SAtaque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LAtaque))
+                    .addComponent(LAtaque)
+                    .addComponent(LStaticAtaque))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SDefensa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LDefensa))
+                    .addComponent(LDefensa)
+                    .addComponent(LStaticDefensa))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SVida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LVida))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                    .addComponent(LVida)
+                    .addComponent(LStativVida))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(BExit)
                 .addGap(58, 58, 58))
         );
@@ -158,19 +182,21 @@ public class ModificarPropiedades extends javax.swing.JDialog
 
     private void BExitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BExitActionPerformed
     {//GEN-HEADEREND:event_BExitActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_BExitActionPerformed
 
     /**
      * change the label text for the actual pokemon stats
-     * @param pokemon object 
+     *
+     * @param pokemon object
      */
-    private void changeLabelText(Pokemon pokemon){
+    private void changeLabelText(Pokemon pokemon)
+    {
         LAtaque.setText(Integer.toString(pokemon.getAtk()));
         LDefensa.setText(Integer.toString(pokemon.getDef()));
         LVida.setText(Integer.toString(pokemon.getLife()));
     }
-    
+
     private void hideItems()
     {
         LAtaque.setVisible(false);
@@ -180,7 +206,9 @@ public class ModificarPropiedades extends javax.swing.JDialog
         SDefensa.setVisible(false);
         SVida.setVisible(false);
         BModificar.setVisible(false);
-
+        LStaticAtaque.setVisible(false);
+        LStaticDefensa.setVisible(false);
+        LStativVida.setVisible(false);
     }
 
     private void showItems()
@@ -192,6 +220,9 @@ public class ModificarPropiedades extends javax.swing.JDialog
         SAtaque.setVisible(true);
         SDefensa.setVisible(true);
         SVida.setVisible(true);
+        LStaticAtaque.setVisible(true);
+        LStaticDefensa.setVisible(true);
+        LStativVida.setVisible(true);
     }
 
     //TODO solve error message at start
@@ -206,8 +237,7 @@ public class ModificarPropiedades extends javax.swing.JDialog
 
     private void fillCBName()
     {
-        String[] pokeNames = Controller.Controller.getNameMap();
-        for (String pokeName : pokeNames)
+        for (String pokeName : Controller.Controller.getNameMap())
         {
             CBName.addItem(pokeName);
         }
@@ -225,6 +255,9 @@ public class ModificarPropiedades extends javax.swing.JDialog
     private javax.swing.JComboBox<String> CBName;
     private javax.swing.JLabel LAtaque;
     private javax.swing.JLabel LDefensa;
+    private javax.swing.JLabel LStaticAtaque;
+    private javax.swing.JLabel LStaticDefensa;
+    private javax.swing.JLabel LStativVida;
     private javax.swing.JLabel LVida;
     private javax.swing.JSpinner SAtaque;
     private javax.swing.JSpinner SDefensa;

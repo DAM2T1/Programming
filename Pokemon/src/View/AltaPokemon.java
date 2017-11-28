@@ -1,7 +1,6 @@
 package View;
 
-import static Controller.Controller.isValidName;
-import java.awt.Dimension;
+import Exception.PokemonException;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,19 +13,9 @@ public class AltaPokemon extends javax.swing.JDialog
     {
         super(parent, modal);
         initComponents();
-        //TODO See about that
-        RBAgua.setActionCommand("Agua"); //is fixed?
+        RBAgua.setActionCommand("Agua");
         RBFuego.setActionCommand("Fuego");
         RBPlanta.setActionCommand("Planta");
-
-        //TODO make this in Netbeans window propietes
-        //** SCREEN PROPETIES **//
-        setSize(700, 400);
-        setTitle("Alta Pokemon");
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setMinimumSize(new Dimension(700, 400));
-        this.setMaximumSize(new Dimension(600, 600));
-
         //** VIEW  CUSTOMIZATION **//
         hideItems();
     }
@@ -56,6 +45,10 @@ public class AltaPokemon extends javax.swing.JDialog
         bExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Alta pokemon");
+        setMaximumSize(new java.awt.Dimension(700, 400));
+        setMinimumSize(new java.awt.Dimension(900, 600));
+        setSize(new java.awt.Dimension(700, 400));
 
         TipoPokemon.add(RBFuego);
         RBFuego.setText("Fuego");
@@ -217,6 +210,12 @@ public class AltaPokemon extends javax.swing.JDialog
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void showSuccessMessage(String msg, String errorName)
+    {
+        JOptionPane.showMessageDialog(this, msg,
+                errorName, JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void BValidarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_BValidarActionPerformed
     {//GEN-HEADEREND:event_BValidarActionPerformed
 
@@ -229,22 +228,42 @@ public class AltaPokemon extends javax.swing.JDialog
             showError("No hay ningun tipo de pokemon seleccionado", "Tipo Incorrecto");
             return;
         }
-        //TODO mostrar excepciones en vista
         if (tipo.equals("Agua"))
         {
-            
-            Controller.Controller.altaPokemonAgua(TFNombre.getText(), (int) SAtaque.getValue(),
-                    (int) SDefensa.getValue(), (int) Salud.getValue(), CBPropEspAgua.getSelectedItem().toString());
+            try
+            {
+                Controller.Controller.altaPokemonAgua(TFNombre.getText(), (int) SAtaque.getValue(),
+                        (int) SDefensa.getValue(), (int) Salud.getValue(), CBPropEspAgua.getSelectedItem().toString());
+                showSuccessMessage("Pokemon Dado de alta", "Success");
+            } catch (PokemonException e)
+            {
+                showError(e.getMessage(), "Error");
+            }
 
         } else if (tipo.equals("Planta"))
         {
-            Controller.Controller.altaPokemonPlanta(TFNombre.getText(), (int) SAtaque.getValue(),
-                    (int) SDefensa.getValue(), (int) Salud.getValue(), TFPropEspPlanta.getText());
+            try
+            {
+                Controller.Controller.altaPokemonPlanta(TFNombre.getText(), (int) SAtaque.getValue(),
+                        (int) SDefensa.getValue(), (int) Salud.getValue(), TFPropEspPlanta.getText());
+                showSuccessMessage("Pokemon Dado de alta", "Success");
+            } catch (PokemonException e)
+            {
+                showError(e.getMessage(), "Error");
+            }
 
         } else if (tipo.equals("Fuego"))
         {
-            Controller.Controller.altaPokemonFuego(TFNombre.getText(), (int) SAtaque.getValue(),
-                    (int) SDefensa.getValue(), (int) Salud.getValue());
+            try
+            {
+                Controller.Controller.altaPokemonFuego(TFNombre.getText(), (int) SAtaque.getValue(),
+                        (int) SDefensa.getValue(), (int) Salud.getValue());
+                showSuccessMessage("Pokemon Dado de alta", "Success");
+            } catch (PokemonException e)
+            {
+                showError(e.getMessage(), "Error");
+            }
+
         }
     }//GEN-LAST:event_BValidarActionPerformed
 

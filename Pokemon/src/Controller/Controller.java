@@ -22,50 +22,42 @@ public class Controller
     public static void main(String args[])
     {
         MainMenu mainMenu = new MainMenu();
+        mainMenu.setLocationRelativeTo(null);
         mainMenu.setVisible(true);
 
     }
 
-    //Datos validados en la vista 
-    //TODO hacer que te de un boolean para comprovar en vista
-    public static boolean altaPokemonAgua(String nombre, int ataque, int defensa, int vida, String tipoAgua)
+    public static void altaPokemonAgua(String nombre, int ataque, int defensa, int vida, String tipoAgua) throws PokemonException
     {
-        if (isValidName(nombre) && !isPokemonCreated(nombre))
-        {
-            TipoAgua tipo;
-            if (tipoAgua.equals("Dulce"))
-            {
-                tipo = TipoAgua.DULCE;
-            } else
-            {
-                tipo = TipoAgua.SALADA;
-            }
-            pokemonMap.put(nombre, new Agua(tipo, ataque, defensa, vida, nombre));
-            return true;
-        }
-        return false;
-    }
-//TODO hacer que te de un boolean para comprovar en vista
+        isValidName(nombre);
+        isPokemonCreated(nombre);
 
-    public static boolean altaPokemonFuego(String nombre, int ataque, int defensa, int vida)
-    {
-        if (isValidName(nombre) && !isPokemonCreated(nombre))
+        TipoAgua tipo;
+        if (tipoAgua.equals("Dulce"))
         {
-            pokemonMap.put(nombre, new Fuego(ataque, defensa, vida, nombre));
-            return true;
+            tipo = TipoAgua.DULCE;
+        } else
+        {
+            tipo = TipoAgua.SALADA;
         }
-        return false;
+        pokemonMap.put(nombre, new Agua(tipo, ataque, defensa, vida, nombre));
     }
-//TODO hacer que te de un boolean para comprovar en vista
 
-    public static boolean altaPokemonPlanta(String nombre, int ataque, int defensa, int vida, String habitat)
+    public static void altaPokemonFuego(String nombre, int ataque, int defensa, int vida) throws PokemonException
     {
-        if (isValidName(nombre) && isValidHabitat(habitat) && !isPokemonCreated(nombre))
-        {
-            pokemonMap.put(nombre, new Planta(habitat, ataque, defensa, vida, nombre));
-            return true;
-        }
-        return false;
+        isValidName(nombre);
+        isPokemonCreated(nombre);
+
+        pokemonMap.put(nombre, new Fuego(ataque, defensa, vida, nombre));
+
+    }
+    
+    public static void altaPokemonPlanta(String nombre, int ataque, int defensa, int vida, String habitat) throws PokemonException
+    {
+        isValidName(nombre);
+        isValidHabitat(habitat);
+        isPokemonCreated(nombre);
+        pokemonMap.put(nombre, new Planta(habitat, ataque, defensa, vida, nombre));
     }
 
     /**
@@ -126,7 +118,7 @@ public class Controller
         ArrayList<Planta> pokemonPlanta = new ArrayList<>();
         for (Pokemon pokemon : pokemonCollection)
         {
-            if (pokemon instanceof Fuego)
+            if (pokemon instanceof Planta)
             {
                 pokemonPlanta.add((Planta) pokemon);
             }
@@ -146,7 +138,7 @@ public class Controller
         ArrayList<Agua> pokemonAgua = new ArrayList<>();
         for (Pokemon pokemon : pokemonCollection)
         {
-            if (pokemon instanceof Fuego)
+            if (pokemon instanceof Agua)
             {
                 pokemonAgua.add((Agua) pokemon);
             }
@@ -154,21 +146,14 @@ public class Controller
         return pokemonAgua;
     }
 
-    //TODO mostrar excepciones en vista
-    public static boolean isPokemonCreated(String name)
+    public static void isPokemonCreated(String name) throws PokemonException
     {
-        if (pokemonMap.get(name) == null)
+        if (pokemonMap.get(name) != null)
         {
-            return false;
+            throw new PokemonException("Ya existe un pokemon con ese nombre");
         }
-        
-        //TODO Move this
-        // JOptionPane.showMessageDialog(null, "El pokemon ya existe con ese nombre", 
-        //       "nombre incorrecto", JOptionPane.ERROR_MESSAGE);
-        return true;
     }
-    //TODO mostrar excepciones en vista
-
+    
     public static boolean isValidHabitat(String name)
     {
         if (name.equals(""))
@@ -180,16 +165,12 @@ public class Controller
         return true;
     }
 
-    //TODO mostrar excepciones en vista
-    public static boolean isValidName(String name)
+    public static void isValidName(String name) throws PokemonException
     {
         if (name.equals(""))
         {
-            JOptionPane.showMessageDialog(null, "No puedes dejar el nombre en blanco",
-                    "nombre incorrecto", JOptionPane.ERROR_MESSAGE);
-            return false;
+            throw new PokemonException("No puedes dejar el nombre en blanco");
         }
-        return true;
     }
 
     public static void changeProperties(Pokemon pokemon, int atak, int def, int life)
